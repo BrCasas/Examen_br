@@ -1,11 +1,14 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import pg from 'pg';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 dotenv.config({ path: '.env.local' });
 
 const { Pool } = pg;
 const app = express();
+const publicDir = fileURLToPath(new URL('./public/', import.meta.url));
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
   ssl: { rejectUnauthorized: false },
@@ -14,6 +17,20 @@ const pool = new Pool({
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.static('public'));
+
+// Vercel routes requests through this function; serve the HTML explicitly at `/`.
+app.get('/', (_req, res) => {
+  res.sendFile(path.join(publicDir, 'index.html'));
+});
+
+// Keep asset delivery working even when the platform routes these paths to Express.
+app.get('/styles.css', (_req, res) => {
+  res.sendFile(path.join(publicDir, 'styles.css'));
+});
+
+app.get('/app.js', (_req, res) => {
+  res.sendFile(path.join(publicDir, 'app.js'));
+});
 
 app.get('/api/usuarios', async (_req, res) => {
   if (!process.env.DATABASE_URL) {
