@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#07111f" />
+    <meta name="description" content="Registro de usuarios conectado a PostgreSQL en Neon." />
+    <title>Proyecto Fullstack | Neon</title>
+    <link rel="stylesheet" href="/styles.css" />
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <section class="panel" aria-labelledby="page-title">
+        <header class="intro">
+          <span class="eyebrow"><span class="status-dot"></span> API conectada</span>
+          <h1 id="page-title">Proyecto <span>Fullstack</span></h1>
+          <p>Registra usuarios y consulta los datos guardados en PostgreSQL con Neon.</p>
+        </header>
+
+        <form id="user-form" class="user-form">
+          <div class="field">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" type="text" maxlength="120" autocomplete="name" placeholder="Ej. Brandon Casasola" required />
+          </div>
+          <div class="field">
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" maxlength="254" autocomplete="email" placeholder="ejemplo@correo.com" required />
+          </div>
+          <button id="submit-button" type="submit">Guardar registro</button>
+          <p id="form-message" class="message" role="status" aria-live="polite"></p>
+        </form>
+
+        <section class="records" aria-labelledby="records-title">
+          <div class="records-heading">
+            <h2 id="records-title">Registros en Neon DB</h2>
+            <span id="record-count" class="count">0 total</span>
+          </div>
+          <div id="user-list" class="user-list" aria-live="polite">
+            <p class="empty-state">Cargando registros…</p>
+          </div>
+        </section>
+      </section>
+      <footer>Frontend estático · Node.js + Express · PostgreSQL</footer>
+    </main>
+  </body>
+</html>
